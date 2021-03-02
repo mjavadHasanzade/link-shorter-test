@@ -28,11 +28,14 @@
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td><a href="https://google.com">https://google.com</a></td>
-                    <td><a href="https://g123456">https://g123456</a></td>
-                    <td><strong>10</strong></td>
-                </tr>
+                <% allUrls.forEach(allUrl => { %>
+                    
+                    <tr>
+                        <td><a href="<%= allUrl.full %>"><%= allUrl.full %> </a></td>
+                        <td><a href="<%= allUrl.short %>"><%= allUrl.short %></a></td>
+                        <td><strong><%= allUrl.clicks %></strong></td>
+                    </tr>
+                <% }) %>
             </tbody>
         </table>
     </div>

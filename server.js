@@ -15,7 +15,7 @@ mongoose.connect('mongodb://localhost:27017/shortUrl', {
 })
 
 app.set('view engine', 'ejs');
-app.set(express.urlencoded({ extended: false }))
+app.use(express.urlencoded({ extended: false }))
 
 app.get('/', async (req, res) => {
     const allUrls = await ShortUrl.find();
@@ -23,7 +23,6 @@ app.get('/', async (req, res) => {
 });
 
 app.post('/shortGenerator', async (req, res) => {
-
     await ShortUrl.create({ full: req.body.fullUrl });
 
     res.redirect('/')
