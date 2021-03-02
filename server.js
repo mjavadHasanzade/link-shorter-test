@@ -1,6 +1,7 @@
 const express = require('express');
 const app = express();
 const mongoose = require('mongoose');
+const ShortUrl = require('./models/model');
 
 mongoose.connect('mongodb://localhost:27017/shortUrl', {
     useNewUrlParser: true,
@@ -14,13 +15,19 @@ mongoose.connect('mongodb://localhost:27017/shortUrl', {
 })
 
 app.set('view engine', 'ejs');
+app.set(express.urlencoded({ extended: false }))
 
-app.get('/', (req, res) => {
-    res.render('index');
+app.get('/', async (req, res) => {
+    const allUrls = await ShortUrl.find();
+    res.render('index', { allUrls: allUrls });
 });
 
-app.post('/shortGenerator', (req, res) => {
-    res.render('index');
+app.post('/shortGenerator', async (req, res) => {
+
+    await ShortUrl.create({ full: req.body.fullUrl });
+
+    res.redirect('/')
+
 });
 
 app.listen(process.env.PORT || 3000, () => {
