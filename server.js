@@ -29,6 +29,16 @@ app.post('/shortGenerator', async (req, res) => {
 
 });
 
+app.get('/:shortUrl', async (req, res) => {
+    const shortUrl = await ShortUrl.findOne({ short: req.params.shortUrl })
+    if (shortUrl == null) return res.sendStatus(404)
+  
+    shortUrl.clicks++
+    shortUrl.save()
+  
+    res.redirect(shortUrl.full)
+  })
+
 app.listen(process.env.PORT || 3000, () => {
     console.log('app is listening to ' + process.env.PORT);
 })
